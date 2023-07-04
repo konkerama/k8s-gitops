@@ -20,3 +20,6 @@ kubectl port-forward svc/mongo-express-service 8081:8081 -n orders
 
 todo: 
 make istio tracing and monitoring work with the deployed monitoring solutions
+
+minikube config set memory 4096
+minikube config set cpus 4
