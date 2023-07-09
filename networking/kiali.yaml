@@ -92,20 +92,8 @@ data:
     external_services:
       custom_dashboards:
         enabled: true
-      prometheus:
-        # Prometheus service name is "metrics" and is in the "telemetry" namespace
-        url: "http://prom-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/"
       istio:
         root_namespace: istio-system
-      tracing:
-        # Enabled by default. Kiali will anyway fallback to disabled if
-        # Jaeger is unreachable.
-        enabled: true
-        # Jaeger service name is "tracing" and is in the "telemetry" namespace.
-        # Make sure the URL you provide corresponds to the non-GRPC enabled endpoint
-        # if you set "use_grpc" to false.
-        in_cluster_url: 'http://simplest-query.monitoring.svc.cluster.local:16685'
-        use_grpc: true
     identity:
       cert_file: ""
       private_key_file: ""

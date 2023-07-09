@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: curstomer-product
+  name: customer-product
   labels:
     istio-injection: enabled
 ---

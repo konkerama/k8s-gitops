@@ -7,7 +7,7 @@
 https://blog.devgenius.io/how-to-deploy-postgresql-db-server-and-pgadmin-in-kubernetes-a-how-to-guide-57952b4e29a8
 
 ``` bash 
-kubectl port-forward svc/pgadmin 8080:80 -n curstomer-product
+kubectl port-forward svc/pgadmin 8080:80 -n customer-product
 ```
 
 ### MongoDB
@@ -23,3 +23,5 @@ make istio tracing and monitoring work with the deployed monitoring solutions
 
 minikube config set memory 4096
 minikube config set cpus 4
+
+for performance reasons temporarily disabling istio

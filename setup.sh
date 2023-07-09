@@ -13,7 +13,8 @@ kubectl rollout status deployment cert-manager-cainjector -n cert-manager
 sleep 10
 kubectl create -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.46.0/jaeger-operator.yaml -n observability
 kubectl rollout status deployment jaeger-operator -n observability
-
+# kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+kubectl apply -f monitoring/metrics-server.yaml
 
 
 # monitoring 
@@ -25,7 +26,16 @@ kubectl apply -f monitoring/jaeger.yaml -n monitoring
 helm upgrade --install opentelemetry-collector open-telemetry/opentelemetry-collector -f monitoring/otel-collector-values.yaml -n monitoring
 
 # networking
-istioctl install -y --set meshConfig.defaultConfig.tracing.zipkin.address=simplest-collector.monitoring.svc.cluster.local:9411 
-kubectl apply -f networking/kiali.yaml
+# istioctl install -y 
+# kubectl apply -f networking/
 
 k kustomize --enable-helm | k apply -f -
+
+# minio set up 
+# set up krew
+#https://krew.sigs.k8s.io/docs/user-guide/setup/install/
+# install kubectl minio plugin
+# kubectl krew install minio
+# kubectl minio init
+# kubectl minio tenant create tenant1 --servers 1 --volumes 1 --capacity 5Gi --namespace customer-product
+# tenant1 credentials exist in a k8s secret
