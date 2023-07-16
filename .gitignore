@@ -1,2 +1,3 @@
 k8s-secrets.yaml
 charts
+credentials-velero

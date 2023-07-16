@@ -1917,7 +1917,7 @@ hidden:
 metrics:
   ## @param metrics.enabled Enable using a sidecar Prometheus exporter
   ##
-  enabled: true
+  enabled: false
   ## Bitnami MongoDB(&reg;) Promtheus Exporter image
   ## ref: https://hub.docker.com/r/bitnami/mongodb-exporter/tags/
   ## @param metrics.image.registry MongoDB(&reg;) Prometheus exporter image registry

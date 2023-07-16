@@ -3,6 +3,12 @@ kind: Deployment
 metadata:
   name: postgres
   namespace: customer-product
+  annotations:
+    backup.velero.io/backup-volumes: backup
+    pre.hook.backup.velero.io/command: '["/bin/bash", "-c", "PGPASSWORD=$POSTGRES_PASSWORD pg_dump -U root -d mydb -h 127.0.0.1 > /scratch/backup.sql"]'
+    pre.hook.backup.velero.io/timeout: 3m
+    post.hook.restore.velero.io/command: '["/bin/bash", "-c", "[ -f \"/scratch/backup.sql\" ] && PGPASSWORD=$POSTGRES_PASSWORD psql -U root -h 127.0.0.1 -d mydb -f /scratch/backup.sql && rm -f /scratch/backup.sql;"]'
+
 spec:
   selector:
    matchLabels:
@@ -17,22 +23,29 @@ spec:
         - name: postgres
           image: postgres:latest
           imagePullPolicy: "IfNotPresent"
+          # resources:
+          #   requests:
+          #     memory: "1000Mi"
+          #     cpu: "1000m"
           env:
-           - name: POSTGRES_USER
-             valueFrom:
-               secretKeyRef:
-                 name: postgres-secret
-                 key: postgres-root-username
-           - name: POSTGRES_PASSWORD
-             valueFrom:
-               secretKeyRef:
-                 name: postgres-secret
-                 key: postgres-root-password
-           - name: POSTGRES_DB
-             valueFrom:
-               configMapKeyRef:
-                 name: postgres-configmap
-                 key: postgres-dbname
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: postgres-root-username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: postgres-root-password
+          - name: POSTGRES_DB
+            value: mydb
+            # valueFrom:
+            #   configMapKeyRef:
+            #     name: postgres-configmap
+            #     key: postgres-dbname
+          # - name: "PGOPTIONS"
+          #   value: "-c max_connections=30"
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgredb
