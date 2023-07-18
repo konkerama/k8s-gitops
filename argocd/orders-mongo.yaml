@@ -14,7 +14,7 @@ spec:
     targetRevision: 13.15.5
     helm:
       valueFiles:
-        - $values/mongo-replicaset.yaml
+        - $values/helm-values/orders-mongo.yaml
   - repoURL: 'https://github.com/konkerama/k8s-project.git'
     targetRevision: HEAD
     ref: values

@@ -14,7 +14,7 @@ spec:
     targetRevision: 12.6.6
     helm:
       valueFiles:
-        - $values/postgres.yaml
+        - $values/helm-values/orders-postgres.yaml
   - repoURL: 'https://github.com/konkerama/k8s-project.git'
     targetRevision: HEAD
     ref: values
