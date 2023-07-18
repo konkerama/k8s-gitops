@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: python-application
+  name: db-mgmt
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
   project: default
   sources:
-  - repoURL: https://github.com/konkerama/k8s-application.git
+  - repoURL: https://github.com/konkerama/k8s-project.git
     targetRevision: HEAD
-    path: python/k8s/overlays/dev
+    path: db-mgmt
   destination:
     server: https://kubernetes.default.svc
     namespace: orders
@@ -18,5 +18,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
