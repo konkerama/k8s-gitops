@@ -1,0 +1,130 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+  namespace: orders
+  labels:
+    app: python-app
+spec:
+  selector:
+    matchLabels:
+      app: python-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "50%"
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      initContainers:
+      - name: liquibase
+        image: liquibase/liquibase:latest
+        command: ["liquibase", "update", "--changeLogFile=changelog/changelog.yaml"]
+        env:
+        - name: LIQUIBASE_LOG_LEVEL
+          value: FINE
+        - name: LIQUIBASE_COMMAND_URL
+          value: "jdbc:postgresql://postgresql:5432/postgres?autoReconnect=true&useSSL=false"
+        - name: LIQUIBASE_COMMAND_USERNAME
+          value: postgres
+        - name: LIQUIBASE_COMMAND_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresql
+              key: postgres-password
+        volumeMounts:
+        - name: liquibase-changelog-volume
+          mountPath: /liquibase/changelog
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - name: python-app
+          # image: client
+          image: konkerama/k8s-application
+          ports:
+            - containerPort: 8080
+          env:
+          - name: ENV
+            value: "TO_BE_REPLACED"
+          - name: OTEL_TRACES_EXPORTER
+            value: "console,otlp"
+          - name: OTEL_SERVICE_NAME
+            value: "demo-flask"
+          - name: OTEL_METRICS_EXPORTER
+            value: "none"
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: "http://opentelemetry-collector.monitoring.svc.cluster.local:4317"
+          - name: OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST
+            value: "Accept-Encoding,User-Agent,Referer"
+          - name: OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_RESPONSE
+            value: "Last-Modified,Content-Type"
+          - name: ME_CONFIG_MONGODB_ADMINUSERNAME 
+            value: root
+          - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: mongodb
+                key: mongodb-root-password
+          - name: ME_CONFIG_MONGODB_SERVER
+            value: mongodb-headless
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgresql
+                key: postgres-password
+          - name: POSTGRES_DB
+            value: postgres
+          - name: POSTGRES_URL
+            value: postgresql
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+              httpHeaders:
+            initialDelaySeconds: 3
+            periodSeconds: 3
+      volumes:
+      - name: liquibase-changelog-volume
+        configMap:
+          name: liquibase-changelog
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-app
+  namespace: orders
+spec:
+  type: LoadBalancer
+  selector:
+    app: python-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: python-app
+  namespace: orders
+  labels:
+    app: python-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: python-app
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50

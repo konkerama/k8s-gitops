@@ -1,0 +1,43 @@
+databaseChangeLog:
+- changeSet:
+    id: 1689337429090-1
+    author: kostas (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: customers_pkey
+            name: customer_id
+            type: INTEGER
+        - column:
+            name: customer_name
+            type: VARCHAR
+        - column:
+            name: customer_surname
+            type: VARCHAR
+        - column:
+            name: customer_number
+            type: VARCHAR
+        - column:
+            name: phone
+            type: VARCHAR
+        - column:
+            name: mobile
+            type: VARCHAR
+        tableName: customers
+- changeSet:
+    id: 2
+    author: kostas
+    changes:
+    - addColumn:
+        tableName: customers
+        columns:
+        - column:
+            name: home
+            type: VARCHAR
+
+

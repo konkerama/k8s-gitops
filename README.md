@@ -2,6 +2,8 @@
 
 ## TODO:
 - cleanup files and README
+- identify a way to automatically add the postgresdb on pgadmin
+  - https://forums.docker.com/t/automatically-connect-pgadmin-to-a-postgresql-volume-on-which-there-is-a-database-and-automatically-load-a-schema-present-on-a-sql-file-with-docker-compose/124647/2
 - add app.yaml on this repo
 
 ## DB Set up
