@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: https://github.com/konkerama/k8s-projext.git
+  - repoURL: https://github.com/konkerama/k8s-project.git
     targetRevision: HEAD
     path: python-app/overlays/dev
   destination:
