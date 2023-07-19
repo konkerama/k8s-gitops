@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: python-app
-          image: konkerama/k8s-application:5aa653b3d7c405571292d5b6fd7824f998a45f98
+          image: konkerama/k8s-application:1.1.3
           env:
           - name: ENV
             value: "dev"
