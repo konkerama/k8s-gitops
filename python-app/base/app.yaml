@@ -31,10 +31,10 @@ spec:
         - name: LIQUIBASE_COMMAND_USERNAME
           value: postgres
         - name: LIQUIBASE_COMMAND_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: postgres-secret
-                key: postgres-password
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
         volumeMounts:
         - name: liquibase-changelog-volume
           mountPath: /liquibase/changelog
