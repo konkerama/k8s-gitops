@@ -184,7 +184,7 @@ auth:
   ## @param auth.existingSecret Existing secret with MongoDB(&reg;) credentials (keys: `mongodb-passwords`, `mongodb-root-password`, `mongodb-metrics-password`, `mongodb-replica-set-key`)
   ## NOTE: When it's set the previous parameters are ignored.
   ##
-  existingSecret: ""
+  existingSecret: "mongodb-secret"
 tls:
   ## @param tls.enabled Enable MongoDB(&reg;) TLS support between nodes in the cluster as well as between mongo clients and nodes
   ##

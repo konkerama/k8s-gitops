@@ -66,7 +66,7 @@ spec:
           - name: ME_CONFIG_MONGODB_ADMINPASSWORD
             valueFrom: 
               secretKeyRef:
-                name: mongodb
+                name: mongodb-secret
                 key: mongodb-root-password
           - name: ME_CONFIG_MONGODB_SERVER
             value: mongodb-headless
@@ -75,7 +75,7 @@ spec:
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: postgres-secret
                 key: postgres-password
           - name: POSTGRES_DB
             value: postgres
