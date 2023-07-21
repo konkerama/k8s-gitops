@@ -1,0 +1,18 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: postgres-secret
+  namespace: orders
+spec:
+  encryptedData:
+    postgres-password: AgCV5sLvdxrZ6RmTylRDWh9V6qFMYT6aWWtw3fx0+2LSOgp2dz6DihEGSfYexnWjFFGQd580QPjw70i2Se79ysMbGrpBfxo8SKdhaO9ekrU6a0mzs+yqr8N3Q3xCB/qqpsQCoR4a0202RtXTM18OKzYxOfxbSpA24AEQC5dQPkLBjz3DXH3ka8/KxXjmz7FQW0VWOI+mzgzb4P2bU3czOtCyQDyvS0cEoE/P265wqtNL/lbcE+0LUWHd66Q0tr3x9j17vXFLsRHMaY0FHc8Rv9sxRUHhEqDj4KU0+vSvY5Nf7jXgLZh4ixxF4ADYK6/nSDg8yInt9iNeSG8M50j5pRFV4LQ6ldYCpGfVEPjdsB7x8cr7r4S8r3ahRalfftfwtFzQEPL5KbNn+gHP8WHz8cVsFri7p/UV38D5povFpAkvZMSKiDrGtTMQVcrULt/FBRC9BYh93nIQ3iaCRatPZ6TVRnZoOK3LZd9PoUF3tNg/QFyOpsqLTUPlT2H+BEvrOn+oZgkg7OfIhxxlAHj01juInfoc2aGYY3j9olChI1u+ZXiQd71A9yMgrExQhSz7Q51Itgmj265yD3ldZH5L6A8cGQ5pmbXXvD0G+IxiUO4Ok6VVDRH19lq9ECyvgA1jq/rczNgbiWOop/zKUFn4YXSZJjPIFods7wTXvT/QEABI7tJG+ANsB2JnPgg6zxQq4WEL3Llec5CJIBpN
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: postgres
+      name: postgres-secret
+      namespace: orders
+    type: Opaque
+

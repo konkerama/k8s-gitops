@@ -1,0 +1,16 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: pgadmin-secret
+  namespace: orders
+spec:
+  encryptedData:
+    pgadmin-default-password: AgC10wkc+I9+OHzIBPhO7U4YV14PHll1ymALNhEFWMV2ThTEAJ897mSsauGKJwz6g+yD0OiFlevbyDLiTo7LgfnSPaTTXMiRCqIdZBz1/QqTetVb2/k3XsXc0640W6rR5iMYAXDYKrR/lIryh9F38RImtloPJnVFy9b7cdGhLVaUsgACihqYiTj/JnWWJuSFqLJhriBZOlyHaphrmCBPdlYnTC8mqFsHRwpuwsl6O1YCA7XO15w2C376cx+NDRx9vNlWb+tg5n9jKk25x88WCFiot423ozSB5CmhqOakbEMgs8Jybl0/pP9LaTllqJjg1Z2MTNpCLGNOXsOro5uRF1mVV2q1gmf4NcmNcZWcvL9jlBxLIPENqrJlqYqx0au7Sgum63Gphmr4Op0TFhdyocGBHjf8zFccqnGdXwUrOaGPp5mJM0V/pL03+N8DeUfpPLk+9xaCakGcBgSZML6kT81VICrEoDTCYS5NEi0ph7A4BLR5DOGcQkwUjvGZlpARG5ZG8XoIhl80OyVCPJmVGwMAOySthAt7cjWTnBLsQNJWVXj3/SJvPxW73l82yVasv7t8FmPM9Ais6h9hyrVjloHd7uYaLW327dSuIzrumAHszGetU0DWM7ulci86+s6WIVXIA2uxBD7FWTWQcjOgs4aFRxPBYtIvC6OyC/WTkS3RiCzBbFITgvX6qAcnwRloIc1geDol2Q==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: pgadmin-secret
+      namespace: orders
+    type: Opaque
+
