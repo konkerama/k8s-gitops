@@ -30,7 +30,7 @@ kubeseal --fetch-cert \
 mkdir tmp
 awk 'BEGIN {SR=0} /^-+$/{SR++} !/^-+$/{out="tmp/" SR ".yaml"; print > out}' k8s-secrets.yaml
 for i in tmp/[0-9]*.yaml; do
-  kubeseal -f $i -w python-app/base/sealed-${i#tmp/} --controller-name sealed-secrets --controller-namespace kube-system
+  kubeseal -f $i -w python-app/base/sealed-${i#tmp/} --controller-name sealed-secrets --controller-namespace kube-system --scope cluster-wide
 done
 # rm -r tmp
 
