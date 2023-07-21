@@ -32,7 +32,7 @@ awk 'BEGIN {SR=0} /^-+$/{SR++} !/^-+$/{out="tmp/" SR ".yaml"; print > out}' k8s-
 for i in tmp/[0-9]*.yaml; do
   kubeseal -f $i -w python-app/base/sealed-${i#tmp/} --controller-name sealed-secrets --controller-namespace kube-system
 done
-rm -r tmp
+# rm -r tmp
 
 ```
 
