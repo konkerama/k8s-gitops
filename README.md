@@ -1,9 +1,12 @@
 # K8s Project
 
 ## TODO:
+- continue with secret management
+long term:
+  - make istio tracing and monitoring work with the deployed monitoring solutions
+  - for performance reasons temporarily disabling istio
 
-- make istio tracing and monitoring work with the deployed monitoring solutions
-- for performance reasons temporarily disabling istio
+# Info 
 
 minikube config:
 
@@ -17,6 +20,8 @@ minikube config set cpus 4
 
 
 ## Secrets 
+
+### Sealed secrets
 https://github.com/bitnami/charts/tree/main/bitnami/sealed-secrets/#installing-the-chart
 Install `kubeseal`
 https://github.com/bitnami-labs/sealed-secrets/releases
@@ -32,9 +37,19 @@ awk 'BEGIN {SR=0} /^-+$/{SR++} !/^-+$/{out="tmp/" SR ".yaml"; print > out}' k8s-
 for i in tmp/[0-9]*.yaml; do
   kubeseal -f $i -w python-app/base/sealed-${i#tmp/} --controller-name sealed-secrets --controller-namespace kube-system --scope cluster-wide
 done
-# rm -r tmp
-
+rm -r tmp
 ```
+**In the end a bit complicate to manage and maintan for different clusters. Urging towards using external secrets**
+
+### External Secrets
+Add secret to aws ssm
+``` bash 
+aws ssm
+```
+
+https://github.com/external-secrets/external-secrets
+https://external-secrets.io/v0.8.5/provider/aws-parameter-store/
+https://external-secrets.io/v0.8.5/introduction/getting-started/
 
 
 
