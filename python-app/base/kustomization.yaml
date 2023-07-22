@@ -10,9 +10,6 @@ commonLabels:
 
 resources:
 - app.yaml
-- sealed-1.yaml
-- sealed-2.yaml
-- sealed-3.yaml
 
 
 configMapGenerator:
