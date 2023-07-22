@@ -44,7 +44,11 @@ rm -r tmp
 ### External Secrets
 Add secret to aws ssm
 ``` bash 
-aws ssm
+aws ssm put-parameter \
+    --name /k8s-project/secrets \
+    --value file://secrets.json \
+    --type SecureString \
+    --overwrite
 ```
 
 https://github.com/external-secrets/external-secrets
