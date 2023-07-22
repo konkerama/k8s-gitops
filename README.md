@@ -1,7 +1,6 @@
 # K8s Project
 
 ## TODO:
-- continue with secret management
 long term:
   - make istio tracing and monitoring work with the deployed monitoring solutions
   - for performance reasons temporarily disabling istio
