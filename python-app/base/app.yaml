@@ -42,7 +42,6 @@ spec:
       - name: regcred
       containers:
         - name: python-app
-          # image: client
           image: konkerama/k8s-application
           ports:
             - containerPort: 8080
