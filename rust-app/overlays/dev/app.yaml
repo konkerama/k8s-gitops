@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+  namespace: orders
+spec:
+  template:
+    spec:
+      containers:
+        - name: python-app
+          image: konkerama/k8s-application:1.1.14
+          env:
+            - name: ENV
+              value: dev
+            - name: ENABLE_TELEMETRY
+              value: 'False'

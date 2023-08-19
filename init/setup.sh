@@ -55,13 +55,18 @@ aws ssm put-parameter   --name /k8s-project/secrets \
                         --type SecureString \
                         --overwrite
 
+aws ssm put-parameter   --name /k8s-project/rust/secrets \
+                        --value file://init/secrets.env \
+                        --type SecureString \
+                        --overwrite
+
 kubectl apply -f init/aws-secret.yaml
 
 # deploy argocd applications 
 kubectl apply -f argocd/system.yaml
 kubectl apply -f argocd/sec-ext-secrets-op.yaml
 kubectl apply -f argocd/orders-secrets.yaml
-kubectl apply -f argocd/orders-postgres.yaml
-kubectl apply -f argocd/orders-mongo.yaml
-kubectl apply -f argocd/db-mgmt.yaml
-kubectl apply -f argocd/orders-app.yaml
+# kubectl apply -f argocd/orders-postgres.yaml
+# kubectl apply -f argocd/orders-mongo.yaml
+# kubectl apply -f argocd/db-mgmt.yaml
+# kubectl apply -f argocd/orders-app.yaml
