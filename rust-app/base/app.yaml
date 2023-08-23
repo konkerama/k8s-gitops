@@ -65,20 +65,10 @@ spec:
             value: "Last-Modified,Content-Type"
           - name: ME_CONFIG_MONGODB_ADMINUSERNAME 
             value: root
-          - name: ME_CONFIG_MONGODB_ADMINPASSWORD
-            valueFrom: 
-              secretKeyRef:
-                name: mongodb-secret
-                key: mongodb-root-password
           - name: ME_CONFIG_MONGODB_SERVER
             value: mongodb-headless
           - name: POSTGRES_USER
             value: postgres
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: postgres-secret
-                key: postgres-password
           - name: POSTGRES_DB
             value: postgres
           - name: POSTGRES_URL
