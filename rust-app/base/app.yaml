@@ -50,7 +50,7 @@ spec:
           - name: ENV
             value: "TO_BE_REPLACED"
           - name: CONFIG_DIRECTORY
-            value: "/etc/secret-volume"
+            value: "/etc/secret-volume/"
           # - name: OTEL_TRACES_EXPORTER
           #   value: "console,otlp"
           # - name: OTEL_SERVICE_NAME
