@@ -47,7 +47,7 @@ spec:
         - name: rust-crud
           image: konkerama/rust-crud-api
           ports:
-            - containerPort: 8080
+            - containerPort: 8000
           env:
           - name: ENV
             value: "TO_BE_REPLACED"
@@ -99,8 +99,8 @@ spec:
     app: rust-crud
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 8000
+      targetPort: 8000
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
