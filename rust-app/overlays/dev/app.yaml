@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: rust-crud
-          image: konkerama/rust-crud-api:0.0.7
+          image: konkerama/rust-crud-api:0.0.8
           env:
             - name: ENV
               value: dev
