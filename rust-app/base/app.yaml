@@ -38,9 +38,6 @@ spec:
         volumeMounts:
         - name: liquibase-changelog-volume
           mountPath: /liquibase/changelog
-        - name: secret-volume
-          readOnly: true
-          mountPath: "/etc/secret-volume"
       imagePullSecrets:
       - name: regcred
       containers:
@@ -84,7 +81,7 @@ spec:
             mountPath: "/etc/secret-volume"
           livenessProbe:
             httpGet:
-              path: /health
+              path: /api/healthchecker
               port: 8000
               httpHeaders:
             initialDelaySeconds: 3
