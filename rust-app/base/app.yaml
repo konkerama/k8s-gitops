@@ -68,6 +68,10 @@ spec:
             value: root
           - name: ME_CONFIG_MONGODB_SERVER
             value: mongodb-headless
+          - name: MONGO_INITDB_DATABASE 
+            value: rust_mongodb
+          - name: MONGODB_NOTE_COLLECTION
+            value: notes
           - name: POSTGRES_USER
             value: postgres
           - name: POSTGRES_DB
