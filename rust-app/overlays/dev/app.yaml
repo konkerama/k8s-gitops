@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: python-app
-          image: konkerama/k8s-application:1.1.14
+          image: konkerama/rust-crud-api:0.0.6
           env:
             - name: ENV
               value: dev

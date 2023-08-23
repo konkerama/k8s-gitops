@@ -38,11 +38,14 @@ spec:
         volumeMounts:
         - name: liquibase-changelog-volume
           mountPath: /liquibase/changelog
+        - name: secret-volume
+          readOnly: true
+          mountPath: "/etc/secret-volume"
       imagePullSecrets:
       - name: regcred
       containers:
         - name: rust-crud
-          image: konkerama/k8s-application
+          image: konkerama/rust-crud-api
           ports:
             - containerPort: 8080
           env:
@@ -91,6 +94,9 @@ spec:
       - name: liquibase-changelog-volume
         configMap:
           name: liquibase-changelog
+      - name: secret-volume
+        secret:
+          secretName: rust-crud-secret
 ---
 apiVersion: v1
 kind: Service
