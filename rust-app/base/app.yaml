@@ -43,7 +43,7 @@ spec:
       containers:
         - name: rust-crud
           image: konkerama/rust-crud-api
-          command: ["sleep","300"]
+          # command: ["sleep","300"]
           ports:
             - containerPort: 8000
           env:
