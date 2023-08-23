@@ -78,6 +78,10 @@ spec:
             value: postgres
           - name: POSTGRES_URL
             value: postgresql
+          volumeMounts:
+          - name: secret-volume
+            readOnly: true
+            mountPath: "/etc/secret-volume"
           livenessProbe:
             httpGet:
               path: /health
