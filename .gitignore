@@ -1,0 +1,5 @@
+k8s-secrets.yaml
+charts
+credentials-velero
+secrets.json
+aws-secret.yaml

@@ -1,0 +1,12 @@
+grafana:
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      url: http://loki-gateway
+      jsonData:
+        httpHeaderName1: 'X-Scope-OrgID'
+      secureJsonData:
+        httpHeaderValue1: '1'
+    - name: Jaeger
+      type: jaeger
+      url: http://simplest-query:16686

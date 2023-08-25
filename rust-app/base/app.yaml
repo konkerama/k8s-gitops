@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rust-crud
+  namespace: orders
+  labels:
+    app: rust-crud
+spec:
+  selector:
+    matchLabels:
+      app: rust-crud
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "50%"
+  template:
+    metadata:
+      labels:
+        app: rust-crud
+    spec:
+      initContainers:
+      - name: liquibase
+        image: liquibase/liquibase:latest
+        command: ["liquibase", "update", "--changeLogFile=changelog/changelog.yaml"]
+        env:
+        - name: LIQUIBASE_LOG_LEVEL
+          value: FINE
+        - name: LIQUIBASE_COMMAND_URL
+          value: "jdbc:postgresql://postgresql:5432/postgres?autoReconnect=true&useSSL=false"
+        - name: LIQUIBASE_COMMAND_USERNAME
+          value: postgres
+        - name: LIQUIBASE_COMMAND_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
+        volumeMounts:
+        - name: liquibase-changelog-volume
+          mountPath: /liquibase/changelog
+      # imagePullSecrets:
+      # - name: regcred
+      containers:
+        - name: rust-crud
+          image: konkerama/rust-crud-api
+          # command: ["sleep","300"]
+          ports:
+            - containerPort: 8000
+          env:
+          - name: ENV
+            value: "TO_BE_REPLACED"
+          - name: CONFIG_DIRECTORY
+            value: "/etc/secret-volume/"
+          # - name: OTEL_TRACES_EXPORTER
+          #   value: "console,otlp"
+          # - name: OTEL_SERVICE_NAME
+          #   value: "demo-flask"
+          # - name: OTEL_METRICS_EXPORTER
+          #   value: "none"
+          # - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          #   value: "http://opentelemetry-collector.monitoring.svc.cluster.local:4317"
+          # - name: OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST
+          #   value: "Accept-Encoding,User-Agent,Referer"
+          # - name: OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_RESPONSE
+          #   value: "Last-Modified,Content-Type"
+          - name: ME_CONFIG_MONGODB_ADMINUSERNAME 
+            value: root
+          - name: ME_CONFIG_MONGODB_SERVER
+            value: mongodb-headless
+          - name: MONGO_INITDB_DATABASE 
+            value: rust_mongodb
+          - name: MONGODB_NOTE_COLLECTION
+            value: notes
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_DB
+            value: postgres
+          - name: POSTGRES_URL
+            value: postgresql
+          volumeMounts:
+          - name: secret-volume
+            readOnly: true
+            mountPath: "/etc/secret-volume"
+          livenessProbe:
+            httpGet:
+              path: /api/healthchecker
+              port: 8000
+              httpHeaders:
+            initialDelaySeconds: 3
+            periodSeconds: 3
+      volumes:
+      - name: liquibase-changelog-volume
+        configMap:
+          name: liquibase-changelog
+      - name: secret-volume
+        secret:
+          secretName: rust-crud-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rust-crud
+  namespace: orders
+spec:
+  type: LoadBalancer
+  selector:
+    app: rust-crud
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: rust-crud
+  namespace: orders
+  labels:
+    app: rust-crud
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: rust-crud
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50

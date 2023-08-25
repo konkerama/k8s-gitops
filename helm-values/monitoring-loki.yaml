@@ -1,0 +1,13 @@
+minio:
+  enabled: true
+loki:
+  auth_enabled: false
+  # necessary config to deploy to minikube (1 node)
+  commonConfig:
+    replication_factor: 1
+write:
+  replicas: 1
+read:
+  replicas: 1
+backend:
+  replicas: 1
