@@ -6,8 +6,8 @@ Currently has been tested only for minikube, testing on EKS is planned.
 
 For the application containers the following repos are used:
 
-- https://github.com/konkerama/rust-crud-api
-- https://github.com/konkerama/python-crud-api
+- [rust-crud-api](https://github.com/konkerama/rust-crud-api)
+- [python-crud-api](https://github.com/konkerama/python-crud-api)
 
 The following technologies are used:
 
@@ -71,6 +71,10 @@ This implementation utilizes Kubernetes External Secrets for management of sensi
 Initially an encrypted parameter in AWS Systems Manager Parameter Store is created. Later, Kubernetes External Secrets will point to this parameter and create "local" Kubernetes secrets based on those values. Those local secrets are then references by all the K8s components. K8s External Secrets is responsible for keeping the local secrets in sync based the source parameter in AWS Systems Manager Parameter Store.
 
 In order for Kubernetes to have the necessary permissions to communicate to AWS a secret is create in Kubernetes in the `init/setup.sh`
+
+## GitOps workflow
+
+In this repo the necessary infrastructure for deploying application containers is defined. The custom applications are deployed in the repositories defined above. The current repository utilizes the builded container that exists on the dockerhub based on the github actions automation on the respective repository. Additionally in the [python-crud-api](https://github.com/konkerama/python-crud-api) repository a github action [automation](https://github.com/konkerama/python-crud-api/blob/a8e9141e04b10eddf4b2503def251d290370259a/.github/workflows/python-ci.yaml#L144-L183) has been build to automatically open a pr in the "infra" repository with the new version of the builded container. 
 
 ## TODO:
 
